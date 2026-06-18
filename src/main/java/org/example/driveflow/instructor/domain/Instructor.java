@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import org.example.driveflow.common.BasePersonEntity;
 import org.example.driveflow.drivingschool.LicenseClass;
 import org.example.driveflow.drivingschool.domain.DrivingSchool;
-import org.example.driveflow.student.Student;
+import org.example.driveflow.student.domain.Student;
 
 import java.util.HashSet;
 import java.util.Set;

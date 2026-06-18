@@ -1,4 +1,4 @@
-package org.example.driveflow.student;
+package org.example.driveflow.student.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;

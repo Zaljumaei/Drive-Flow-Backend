@@ -1,7 +1,7 @@
-package org.example.driveflow.lesson;
+package org.example.driveflow.lesson.domain;
 
 import jakarta.persistence.*;
-import org.example.driveflow.student.Student;
+import org.example.driveflow.student.domain.Student;
 
 import java.util.HashSet;
 import java.util.Set;
