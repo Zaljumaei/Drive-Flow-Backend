@@ -1,6 +1,7 @@
 HELP.md
 target/
 *.class
+${project.build.directory}/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
