@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import org.example.driveflow.common.Address;
 import org.example.driveflow.drivingschool.LicenseClass;
 import org.example.driveflow.instructor.domain.Instructor;
-import org.example.driveflow.student.Student;
-import org.example.driveflow.vehicle.Vehicle;
+import org.example.driveflow.student.domain.Student;
+import org.example.driveflow.vehicle.domain.Vehicle;
 
 import java.util.HashSet;
 import java.util.Set;

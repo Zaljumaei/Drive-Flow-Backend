@@ -1,4 +1,4 @@
-package org.example.driveflow.lesson;
+package org.example.driveflow.lesson.domain;
 
 public enum PracticalLessonStatus {
     Completed,

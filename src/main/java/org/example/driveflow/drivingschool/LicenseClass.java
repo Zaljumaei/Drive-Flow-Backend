@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.example.driveflow.student.Student;
+import org.example.driveflow.student.domain.Student;
 
 
 //TODO should this class be enum to include known LicenseClasses in Germany like A B..... or we let every school add them manually

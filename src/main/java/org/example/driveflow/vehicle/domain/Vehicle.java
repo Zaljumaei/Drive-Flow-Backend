@@ -1,4 +1,4 @@
-package org.example.driveflow.vehicle;
+package org.example.driveflow.vehicle.domain;
 
 import jakarta.persistence.*;
 import org.example.driveflow.drivingschool.domain.DrivingSchool;

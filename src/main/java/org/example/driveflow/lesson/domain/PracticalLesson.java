@@ -1,10 +1,10 @@
-package org.example.driveflow.lesson;
+package org.example.driveflow.lesson.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 
-import org.example.driveflow.student.Student;
-import org.example.driveflow.vehicle.Vehicle;
+import org.example.driveflow.student.domain.Student;
+import org.example.driveflow.vehicle.domain.Vehicle;
 
 @Entity
 public class PracticalLesson extends Lesson {
