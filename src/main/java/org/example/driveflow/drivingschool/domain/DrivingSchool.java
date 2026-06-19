@@ -1,6 +1,7 @@
 package org.example.driveflow.drivingschool.domain;
 
 import jakarta.persistence.*;
+import org.example.driveflow.common.AbstractEntity;
 import org.example.driveflow.common.Address;
 import org.example.driveflow.drivingschool.LicenseClass;
 import org.example.driveflow.instructor.domain.Instructor;
@@ -11,13 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class DrivingSchool {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    private String name;
+public class DrivingSchool extends AbstractEntity {
 
     @Embedded
     private Address address;
