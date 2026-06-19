@@ -1,16 +1,12 @@
 package org.example.driveflow.common;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
-import java.util.regex.Pattern;
 
 @MappedSuperclass
 @Getter
@@ -18,6 +14,7 @@ import java.util.regex.Pattern;
 public class BasePersonEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
 
     private String tenantId;
@@ -36,8 +33,10 @@ public class BasePersonEntity {
     private Address address;
 
     @CreationTimestamp
+    @Column(name = "creation_date", nullable = false, updatable = false)
     private LocalDate creationDate;
 
-    @UpdateTimestamp
+    @LastModifiedDate
+    @Column(name = "update_date", nullable = false, updatable = true)
     private LocalDate updateDate;
 }
