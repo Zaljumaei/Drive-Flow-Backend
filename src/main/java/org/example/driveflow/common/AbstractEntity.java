@@ -15,12 +15,10 @@ import java.time.LocalDateTime;
 public class AbstractEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-
-    private String tenantId;
 
     @CreatedDate
     @Column(name = "created_date", updatable = false, nullable = false)
