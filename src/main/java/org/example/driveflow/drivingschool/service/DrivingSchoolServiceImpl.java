@@ -1,4 +1,94 @@
 package org.example.driveflow.drivingschool.service;
 
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.example.driveflow.drivingschool.domain.DrivingSchool;
+import org.example.driveflow.drivingschool.dtos.DrivingSchoolMapper;
+import org.example.driveflow.drivingschool.dtos.DrivingSchoolRequest;
+import org.example.driveflow.drivingschool.dtos.DrivingSchoolResponse;
+import org.example.driveflow.drivingschool.repository.DrivingSchoolRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
 public class DrivingSchoolServiceImpl implements DrivingSchoolService {
+
+    private final DrivingSchoolRepository drivingSchoolRepository;
+
+    /**
+     * TODO Creating drivingSchool with same name should be later allowed (like same school but another branchOffice),it must be then compared if the address the same or not.
+     * Create new DrivingSchool entity and save it in the database after checking if there is not the same DrivingSchool .
+     * @param request the infos of drivingSchool to be created.
+     */
+    @Override
+    public void create(DrivingSchoolRequest request) {
+        checkIfExistsByName(request.name());
+        DrivingSchool drivingSchool = DrivingSchoolMapper.toDrivingSchool(request);
+        this.drivingSchoolRepository.save(drivingSchool);
+    }
+
+    /**
+     * update the infos of drivingSchool that are defined in request,
+     * another data like Student, instructor... have another methode.
+     * @param id the id of the school
+     * @param request the request with information, that should be updated.
+     */
+    @Override
+    public void update(Long id, DrivingSchoolRequest request) {
+        DrivingSchool drivingSchool = checkIfExistsById(id);
+        DrivingSchool existingDrivingSchool =  DrivingSchoolMapper.updateMapperDrivingSchool(request, drivingSchool);
+        this.drivingSchoolRepository.save(existingDrivingSchool);
+    }
+
+    /**
+     * find a DrivingSchool by its id and return the Dto for drivingSchool, not the entity itself.
+     * @param id the id of drivingSchool
+     * @return drivingSchoolResponse
+     */
+    @Override
+    public DrivingSchoolResponse findById(Long id) {
+        DrivingSchool drivingSchool = checkIfExistsById(id);
+        return DrivingSchoolMapper.toDrivingSchoolResponse(drivingSchool);
+    }
+
+    /**
+     * delete method
+     * @param id of the drivingSchool, that will be deleted.
+     */
+    @Override
+    public void delete(Long id) {
+        DrivingSchool drivingSchool = checkIfExistsById(id);
+        this.drivingSchoolRepository.delete(drivingSchool);
+    }
+
+    //-------------------------------Helper Methods-------------------------------
+    /**
+     * check if DrivingSchool exist by name, because we do not have id from request.
+     * @param drivingSchoolName the name, which will search after it.
+     */
+    private void checkIfExistsByName(String  drivingSchoolName) {
+        Optional<DrivingSchool> drivingSchool = this.drivingSchoolRepository.findByName(drivingSchoolName);
+        if (drivingSchool.isPresent()) {
+            log.debug("Driving school already exists with name {}", drivingSchoolName);
+            throw new RuntimeException("Driving school already exists");
+        }
+    }
+
+    /**
+     * check if the drivingSchool exist by id and return it otherwise exception will be arisen.
+     * @param id of DrivingSchool.
+     * @return the drivingSchool if founded.
+     */
+    private DrivingSchool checkIfExistsById(Long id) {
+        Optional<DrivingSchool> drivingSchool = this.drivingSchoolRepository.findById(id);
+        if (drivingSchool.isEmpty()) {
+            log.debug("No driving school found with id {}", id);
+            throw new EntityNotFoundException("No driving school found with id " + id);
+        }
+        return drivingSchool.get();
+    }
 }
