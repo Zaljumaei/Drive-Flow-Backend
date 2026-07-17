@@ -39,7 +39,7 @@ class DrivingSchoolServiceImplTest {
 
     private DrivingSchool testDrivingSchool;
     private DrivingSchoolRequest testDrivingSchoolRequest;
-    private DrivingSchoolResponse testdrivingSchoolResponse;
+    private DrivingSchoolResponse testDrivingSchoolResponse;
 
     @BeforeEach
     void setUp(){
@@ -59,7 +59,7 @@ class DrivingSchoolServiceImplTest {
         this.testDrivingSchool.setPhoneNumber("2314 9988");
         this.testDrivingSchool.setName("Max-Fahrschule");
 
-        this.testdrivingSchoolResponse =
+        this.testDrivingSchoolResponse =
                 new DrivingSchoolResponse(1L, "Max-Fahrschule", "2314 9988");
 
 
@@ -81,15 +81,15 @@ class DrivingSchoolServiceImplTest {
             when(drivingSchoolRepository.save(any(DrivingSchool.class)))
                     .thenReturn(testDrivingSchool);
             when(drivingSchoolMapper.toDrivingSchoolResponse(testDrivingSchool))
-                    .thenReturn(testdrivingSchoolResponse);
+                    .thenReturn(testDrivingSchoolResponse);
 
             //when
-           testdrivingSchoolResponse =  drivingSchoolServiceImpl.create(testDrivingSchoolRequest);
+           testDrivingSchoolResponse =  drivingSchoolServiceImpl.create(testDrivingSchoolRequest);
 
             //then
-            assertEquals(testdrivingSchoolResponse.name(),
+            assertEquals(testDrivingSchoolResponse.name(),
                     testDrivingSchoolRequest.name());
-            assertEquals(testdrivingSchoolResponse.phoneNumber(),
+            assertEquals(testDrivingSchoolResponse.phoneNumber(),
                     testDrivingSchoolRequest.phoneNumber());
 
             verify(drivingSchoolRepository, times(1)).save(any(DrivingSchool.class));
@@ -194,6 +194,83 @@ class DrivingSchoolServiceImplTest {
             verify(drivingSchoolRepository).findById(drivingSchoolId);
             verifyNoInteractions(drivingSchoolMapper);
             verify(drivingSchoolRepository, never()).save(any(DrivingSchool.class));
+        }
+    }
+
+    @Nested
+    @DisplayName("Delete DrivingSchool Tests")
+    class DeleteDrivingSchoolTest {
+
+        @Test
+        @DisplayName("should delete DrivingSchool entity sucessfully")
+        void shouldDeleteDrivingSchoolSuccessfully() {
+            Long drivingSchoolId = testDrivingSchool.getId();
+            when(drivingSchoolRepository.findById(drivingSchoolId)).thenReturn(Optional.of(testDrivingSchool));
+
+            assertDoesNotThrow(() -> drivingSchoolServiceImpl.delete(drivingSchoolId));
+            verify(drivingSchoolRepository, times(1)).delete(testDrivingSchool);
+        }
+
+        @Test
+        @DisplayName("should throw Exception when Entity not found.")
+        void shouldThrowExceptionWhenEntityNotFound() {
+            Long drivingSchoolId = testDrivingSchool.getId();
+            when(drivingSchoolRepository.findById(drivingSchoolId)).thenReturn(Optional.empty());
+            EntityNotFoundException exception = assertThrows(
+                    EntityNotFoundException.class,
+                    () -> drivingSchoolServiceImpl.delete(drivingSchoolId));
+
+            assertNotNull(exception);
+            verify(drivingSchoolRepository, never()).delete(testDrivingSchool);
+        }
+    }
+
+    @Nested
+    @DisplayName("Find DrivingSchool ById Tests")
+    class FindDrivingSchoolByIdTest {
+
+        @Test
+        @DisplayName("Should return DrivingSchool when id exists")
+        void shouldReturnDrivingSchoolWhenIdExists() {
+            // given
+            Long id = testDrivingSchool.getId();
+
+            when(drivingSchoolRepository.findById(id))
+                    .thenReturn(Optional.of(testDrivingSchool));
+
+            when(drivingSchoolMapper.toDrivingSchoolResponse(testDrivingSchool))
+                    .thenReturn(testDrivingSchoolResponse);
+
+            // when
+            DrivingSchoolResponse response = drivingSchoolServiceImpl.findById(id);
+
+            // then
+            assertEquals(testDrivingSchoolResponse, response);
+
+            verify(drivingSchoolRepository).findById(id);
+            verify(drivingSchoolMapper).toDrivingSchoolResponse(testDrivingSchool);
+        }
+
+        @Test
+        @DisplayName("Should throw exception when DrivingSchool is not found")
+        void shouldThrowExceptionWhenDrivingSchoolNotFound() {
+            // given
+            Long id = 99L;
+
+            when(drivingSchoolRepository.findById(id))
+                    .thenReturn(Optional.empty());
+
+            // when
+            EntityNotFoundException exception = assertThrows(
+                    EntityNotFoundException.class,
+                    () -> drivingSchoolServiceImpl.findById(id)
+            );
+
+            // then
+            assertEquals("No driving school found with id " + id, exception.getMessage());
+
+            verify(drivingSchoolRepository).findById(id);
+            verifyNoInteractions(drivingSchoolMapper);
         }
     }
 
