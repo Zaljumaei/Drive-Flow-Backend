@@ -1,8 +1,12 @@
 package org.example.driveflow.common;
 
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 @Embeddable
+@Builder
+@AllArgsConstructor
 public class Address {
 
     private String country;
@@ -13,4 +17,7 @@ public class Address {
     private String street;
     private String streetNumber;
 
+    public Address() {
+
+    }
 }

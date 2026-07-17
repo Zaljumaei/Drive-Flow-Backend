@@ -1,9 +1,9 @@
 package org.example.driveflow.drivingschool.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
-
 import org.example.driveflow.common.AbstractEntity;
 import org.example.driveflow.student.domain.Student;
 
