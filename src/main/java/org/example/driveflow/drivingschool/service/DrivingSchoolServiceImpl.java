@@ -42,14 +42,17 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
     /**
      * update the infos of drivingSchool that are defined in request,
      * another data like Student, instructor... have another methode.
-     * @param id the id of the school
+     *
+     * @param id      the id of the school
      * @param request the request with information, that should be updated.
+     * @return
      */
     @Override
-    public void update(Long id, DrivingSchoolRequest request) {
-        DrivingSchool drivingSchool = checkIfExistsById(id);
-        DrivingSchool existingDrivingSchool =  this.drivingSchoolMapper.updateMapperDrivingSchool(request, drivingSchool);
-        this.drivingSchoolRepository.save(existingDrivingSchool);
+    public DrivingSchoolResponse update(Long id, DrivingSchoolRequest request) {
+        DrivingSchool existedDrivingSchool = checkIfExistsById(id);
+        DrivingSchool updatedDrivingSchool =  this.drivingSchoolMapper.updateMapperDrivingSchool(request, existedDrivingSchool);
+        DrivingSchoolResponse drivingSchoolResponse = this.drivingSchoolMapper.toDrivingSchoolResponse(this.drivingSchoolRepository.save(updatedDrivingSchool));
+        return drivingSchoolResponse;
     }
 
     /**

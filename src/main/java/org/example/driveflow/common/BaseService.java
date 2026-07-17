@@ -4,7 +4,7 @@ public interface BaseService<I, O> {
 
     O create(I request);
 
-    void update(Long id, I request);
+    O update(Long id, I request);
 
     O findById(Long id);
 
