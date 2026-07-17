@@ -2,7 +2,7 @@ package org.example.driveflow.common;
 
 public interface BaseService<I, O> {
 
-    void create(I request);
+    O create(I request);
 
     void update(Long id, I request);
 

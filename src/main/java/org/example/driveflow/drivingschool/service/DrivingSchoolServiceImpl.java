@@ -1,16 +1,19 @@
 package org.example.driveflow.drivingschool.service;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
 import org.example.driveflow.drivingschool.domain.DrivingSchool;
 import org.example.driveflow.drivingschool.dtos.DrivingSchoolMapper;
 import org.example.driveflow.drivingschool.dtos.DrivingSchoolRequest;
 import org.example.driveflow.drivingschool.dtos.DrivingSchoolResponse;
 import org.example.driveflow.drivingschool.repository.DrivingSchoolRepository;
-import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,16 +22,21 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
 
     private final DrivingSchoolRepository drivingSchoolRepository;
 
+    private final DrivingSchoolMapper drivingSchoolMapper;
+
     /**
      * TODO Creating drivingSchool with same name should be later allowed (like same school but another branchOffice),it must be then compared if the address the same or not.
      * Create new DrivingSchool entity and save it in the database after checking if there is not the same DrivingSchool .
+     *
      * @param request the infos of drivingSchool to be created.
+     * @return
      */
     @Override
-    public void create(DrivingSchoolRequest request) {
+    public DrivingSchoolResponse create(DrivingSchoolRequest request) {
         checkIfExistsByName(request.name());
-        DrivingSchool drivingSchool = DrivingSchoolMapper.toDrivingSchool(request);
-        this.drivingSchoolRepository.save(drivingSchool);
+        DrivingSchool drivingSchool = this.drivingSchoolMapper.toDrivingSchool(request);
+        DrivingSchoolResponse drivingSchoolResponse = this.drivingSchoolMapper.toDrivingSchoolResponse(this.drivingSchoolRepository.save(drivingSchool));
+        return drivingSchoolResponse;
     }
 
     /**
@@ -40,7 +48,7 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
     @Override
     public void update(Long id, DrivingSchoolRequest request) {
         DrivingSchool drivingSchool = checkIfExistsById(id);
-        DrivingSchool existingDrivingSchool =  DrivingSchoolMapper.updateMapperDrivingSchool(request, drivingSchool);
+        DrivingSchool existingDrivingSchool =  this.drivingSchoolMapper.updateMapperDrivingSchool(request, drivingSchool);
         this.drivingSchoolRepository.save(existingDrivingSchool);
     }
 
@@ -52,7 +60,7 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
     @Override
     public DrivingSchoolResponse findById(Long id) {
         DrivingSchool drivingSchool = checkIfExistsById(id);
-        return DrivingSchoolMapper.toDrivingSchoolResponse(drivingSchool);
+        return this.drivingSchoolMapper.toDrivingSchoolResponse(drivingSchool);
     }
 
     /**
@@ -74,7 +82,7 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
         Optional<DrivingSchool> drivingSchool = this.drivingSchoolRepository.findByName(drivingSchoolName);
         if (drivingSchool.isPresent()) {
             log.debug("Driving school already exists with name {}", drivingSchoolName);
-            throw new RuntimeException("Driving school already exists");
+            throw new EntityExistsException("Driving school already exists");
         }
     }
 
