@@ -5,7 +5,7 @@ The project is designed as a realistic portfolio project for demonstrating backe
 
 ## Project Goal
 
-Many driving schools manage students, instructors, lessons, vehicles, and payments through different tools such as paper, Excel, WhatsApp, or separate software systems. DriveFlow aims to provide a centralized backend for managing these core processes in one system.
+Many driving schools manage students, instructors, lessons and vehicles through different tools such as paper, Excel, WhatsApp, or separate software systems. DriveFlow aims to provide a centralized backend for managing these core processes in one system.
 
 The first version focuses on a clean and maintainable backend architecture rather than a complete commercial product.
 
@@ -91,7 +91,6 @@ com.zaljumaei.driveflow
 ├── student
 ├── instructor
 ├── lesson
-├── payment
 ├── vehicle
 └── tenant
     ├── TenantContext.java
@@ -119,7 +118,7 @@ Important design decisions:
 - Practical lessons and theory lessons are modeled separately.
 - Theory topics are stored separately from concrete theory lesson sessions.
 - A student may attend the same theory topic multiple times through different lesson sessions.
-- Student account/progress information is calculated from lessons, attendances, and payments instead of being stored as duplicated summary data.
+- Student account/progress information is calculated from lessons, and attendances instead of being stored as duplicated summary data.
 
 ## Testing
 
