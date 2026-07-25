@@ -3,13 +3,14 @@ package com.zaljumaei.driveflow.drivingschool.controller;
 import com.zaljumaei.driveflow.drivingschool.dtos.DrivingSchoolRequest;
 import com.zaljumaei.driveflow.drivingschool.dtos.DrivingSchoolResponse;
 import com.zaljumaei.driveflow.drivingschool.service.DrivingSchoolService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller for drivingSchool that can be used by the admin of drivingSchool or the systemAdmin
  */
 @RestController
-@RequestMapping(path = "/drivingschool")
+@RequestMapping(path = "/api/driving-schools")
 public class DrivingSchoolController {
 
     private final DrivingSchoolService drivingSchoolService;
@@ -25,7 +26,8 @@ public class DrivingSchoolController {
      * @return the response after updated
      */
     @PutMapping(value = "/edit/{id}")
-    public DrivingSchoolResponse update(@PathVariable Long id, @RequestBody DrivingSchoolRequest drivingSchoolRequest) {
-        return drivingSchoolService.update(id,drivingSchoolRequest);
+    public ResponseEntity<DrivingSchoolResponse> update(@PathVariable Long id, @RequestBody DrivingSchoolRequest drivingSchoolRequest) {
+        DrivingSchoolResponse response = drivingSchoolService.update(id,drivingSchoolRequest);
+        return ResponseEntity.ok(response);
     }
 }

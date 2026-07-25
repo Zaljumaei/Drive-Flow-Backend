@@ -5,6 +5,7 @@ import com.zaljumaei.driveflow.drivingschool.dtos.DrivingSchoolResponse;
 import com.zaljumaei.driveflow.drivingschool.service.DrivingSchoolService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(path = "/drivingschoolsforadmin", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/admin/driving-schools", produces = MediaType.APPLICATION_JSON_VALUE)
 public class DrivingSchoolAdminController {
 
     private final DrivingSchoolService drivingSchoolService;
@@ -24,25 +25,28 @@ public class DrivingSchoolAdminController {
         this.drivingSchoolService = drivingSchoolService;
     }
 
-    @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
-    public DrivingSchoolResponse processDrivingSchool(@RequestBody DrivingSchoolRequest drivingSchoolRequest) {
-        return drivingSchoolService.create(drivingSchoolRequest);
+    @PostMapping("/create")
+    public ResponseEntity<DrivingSchoolResponse> processDrivingSchool(@RequestBody DrivingSchoolRequest drivingSchoolRequest) {
+        DrivingSchoolResponse response = drivingSchoolService.create(drivingSchoolRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping("/{id}")
-    public DrivingSchoolResponse getDrivingSchoolById(@PathVariable Long id) {
-        return drivingSchoolService.findById(id);
+    public ResponseEntity<DrivingSchoolResponse> getDrivingSchoolById(@PathVariable Long id) {
+        DrivingSchoolResponse response = drivingSchoolService.findById(id);
+        return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/{name}")
-    public DrivingSchoolResponse getDrivingSchoolByName(@PathVariable String name) {
-        return drivingSchoolService.findByName(name);
+    @GetMapping
+    public ResponseEntity<DrivingSchoolResponse> getDrivingSchoolByName(@RequestParam(value = "name") String name) {
+        DrivingSchoolResponse response = drivingSchoolService.findByName(name);
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping(value = "/allDrSchools")
-    public List<DrivingSchoolResponse> getAllDrivingSchools() {
-        return drivingSchoolService.findAllDrivingSchools();
+    public ResponseEntity<List<DrivingSchoolResponse>> getAllDrivingSchools() {
+        List<DrivingSchoolResponse> listResponse = drivingSchoolService.findAllDrivingSchools();
+        return ResponseEntity.ok().body(listResponse);
     }
 
 
@@ -50,6 +54,7 @@ public class DrivingSchoolAdminController {
     //create method to return number of students, instructors, vehicles., MayBe create Dto, that contain thus infos plus normal info.
 
     @DeleteMapping(value = "/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDrivingSchool(@PathVariable Long id) {
         drivingSchoolService.delete(id);
     }

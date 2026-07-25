@@ -26,7 +26,11 @@ public class Instructor extends BasePersonEntity {
      * Driving license that instructor can teach them
      */
     @ManyToMany
-    @JoinColumn(name = "license_id")
+    @JoinTable(
+            name = "license_classes",
+            joinColumns = @JoinColumn(name = "instructor_id"),
+            inverseJoinColumns = @JoinColumn(name = "license_id")
+    )
     private Set<LicenseClass> licenseClasses = new HashSet<>();
 
     @OneToMany
