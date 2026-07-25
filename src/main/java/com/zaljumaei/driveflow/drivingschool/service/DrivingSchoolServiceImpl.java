@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.zaljumaei.driveflow.drivingschool.domain.DrivingSchool;
 import com.zaljumaei.driveflow.drivingschool.dtos.DrivingSchoolMapper;
@@ -64,6 +66,34 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
     public DrivingSchoolResponse findById(Long id) {
         DrivingSchool drivingSchool = checkIfExistsById(id);
         return this.drivingSchoolMapper.toDrivingSchoolResponse(drivingSchool);
+    }
+
+    /**
+     * Find a DrivingSchool by its name
+     * @param drivingSchoolName name of DrivingSchool
+     * @return dto of drivingSchool
+     */
+    @Override
+    public DrivingSchoolResponse findByName(String drivingSchoolName) {
+        Optional<DrivingSchool> drivingSchool = this.drivingSchoolRepository.findByName(drivingSchoolName);
+        if (drivingSchool.isPresent()) {
+            return drivingSchoolMapper.toDrivingSchoolResponse(drivingSchool.get());
+        }else {
+            log.error("DrivingSchool Not Found with name {}", drivingSchoolName);
+            throw new EntityNotFoundException("DrivingSchool not found with name.");
+        }
+    }
+
+    @Override
+    public List<DrivingSchoolResponse> findAllDrivingSchools() {
+        List<DrivingSchool> drivingSchools = this.drivingSchoolRepository.findAll();
+        if (drivingSchools.isEmpty()) {
+            log.error("DrivingSchool Not Found");
+            throw new EntityNotFoundException("DrivingSchool not found");
+        }else  {
+            log.info("DrivingSchools Found: "+drivingSchools.size());
+            return drivingSchools.stream().map(drivingSchoolMapper::toDrivingSchoolResponse).collect(Collectors.toList());
+        }
     }
 
     /**

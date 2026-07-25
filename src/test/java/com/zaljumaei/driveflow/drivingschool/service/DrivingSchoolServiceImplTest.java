@@ -202,7 +202,7 @@ class DrivingSchoolServiceImplTest {
     class DeleteDrivingSchoolTest {
 
         @Test
-        @DisplayName("should delete DrivingSchool entity sucessfully")
+        @DisplayName("should delete DrivingSchool entity successfully")
         void shouldDeleteDrivingSchoolSuccessfully() {
             Long drivingSchoolId = testDrivingSchool.getId();
             when(drivingSchoolRepository.findById(drivingSchoolId)).thenReturn(Optional.of(testDrivingSchool));
