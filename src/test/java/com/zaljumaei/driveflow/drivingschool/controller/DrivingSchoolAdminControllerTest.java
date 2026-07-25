@@ -26,9 +26,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Test class fot {@link DrivingSchoolAdminController}.
- * IT doesn't test the logic of the controller methods,
- * rather than it test if the Controller methods can be reached.
+ * Test class for {@link DrivingSchoolAdminController}.
+ * It doesn't test the logic of the controller methods,
+ * rather, it tests request mapping, HTTP status codes, JSON responses,
+ * request deserialization, and delegation to the service layer.
  */
 @WebMvcTest(DrivingSchoolAdminController.class)
 class DrivingSchoolAdminControllerTest {
