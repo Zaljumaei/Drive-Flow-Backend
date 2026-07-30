@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url:
+    username:
+    password:
+
+
+
+
+paging:
+  page:
+    drivingSchoolPageSize: 50
+    instructorPageSize: 20
+    studentPageSize: 20
+    vehiclePageSize: 20
