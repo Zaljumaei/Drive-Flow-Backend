@@ -3,13 +3,13 @@ package com.zaljumaei.driveflow.vehicle.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import com.zaljumaei.driveflow.common.AbstractEntity;
+import com.zaljumaei.driveflow.common.TenantScopedEntity;
 import com.zaljumaei.driveflow.drivingschool.domain.DrivingSchool;
 
 @Getter
 @Setter
 @Entity
-public class Vehicle extends AbstractEntity {
+public class Vehicle extends TenantScopedEntity {
 
     private String brand;
 

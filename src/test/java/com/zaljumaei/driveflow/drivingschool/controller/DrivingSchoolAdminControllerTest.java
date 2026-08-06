@@ -42,7 +42,7 @@ class DrivingSchoolAdminControllerTest {
 
     private DrivingSchoolResponse drivingSchoolResponse;
     private DrivingSchoolRequest drivingSchoolRequest;
-    private long id;
+    private String id;
 
     @Autowired
     private JsonMapper jsonMapper;
@@ -51,7 +51,7 @@ class DrivingSchoolAdminControllerTest {
 
     @BeforeEach
     void setUp() {
-        id = 1L;
+        id = "1";
         Address address = Address.builder()
                 .city("Bochum")
                 .street("Hauptstrasse")

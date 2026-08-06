@@ -9,11 +9,11 @@ public interface InstructorService {
 
     InstructorResponse create(CreateInstructorRequest request);
 
-    InstructorResponse update(Long id, UpdateInstructorRequest request);
+    InstructorResponse update(String id, UpdateInstructorRequest request);
 
-    InstructorResponse findById(Long id);
+    InstructorResponse findById(String id);
 
-    PageResponse<Instructor> findAll(int page);
+    PageResponse<InstructorResponse> findAll(int page);
 
-    void delete(Long id);
+    void delete(String id);
 }

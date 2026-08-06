@@ -32,7 +32,7 @@ public class DrivingSchoolAdminController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DrivingSchoolResponse> getDrivingSchoolById(@PathVariable Long id) {
+    public ResponseEntity<DrivingSchoolResponse> getDrivingSchoolById(@PathVariable String id) {
         DrivingSchoolResponse response = drivingSchoolService.findById(id);
         return ResponseEntity.ok().body(response);
     }
@@ -55,7 +55,7 @@ public class DrivingSchoolAdminController {
 
     @DeleteMapping(value = "/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteDrivingSchool(@PathVariable Long id) {
+    public void deleteDrivingSchool(@PathVariable String id) {
         drivingSchoolService.delete(id);
     }
 

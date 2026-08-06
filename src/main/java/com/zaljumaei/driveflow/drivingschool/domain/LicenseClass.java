@@ -6,7 +6,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
-import com.zaljumaei.driveflow.common.AbstractEntity;
+import com.zaljumaei.driveflow.common.TenantScopedEntity;
 import com.zaljumaei.driveflow.student.domain.Student;
 
 import java.util.Set;
@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-public class LicenseClass extends AbstractEntity {
+public class LicenseClass extends TenantScopedEntity {
 
     private String description;
 

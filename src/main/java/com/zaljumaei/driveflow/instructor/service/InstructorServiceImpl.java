@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 /**
@@ -42,8 +43,8 @@ public class InstructorServiceImpl implements InstructorService {
      */
     @Override
     public InstructorResponse create(CreateInstructorRequest request) {
-        Long tenantId = TenantContext.getCurrentTenant();
-        checkIfExistByEmail(request.email(), tenantId);
+        //Long tenantId = TenantContext.getCurrentTenant();
+        //checkIfExistByEmail(request.email(), tenantId);
 
         Instructor instructor = instructorMapper.toEntity(request);
         instructorRepository.save(instructor);
@@ -58,9 +59,9 @@ public class InstructorServiceImpl implements InstructorService {
      * @return Dto response after updating.
      */
     @Override
-    public InstructorResponse update(Long id, UpdateInstructorRequest request) {
-        Long tenantId = TenantContext.getCurrentTenant();
-        Instructor instructor = checkIfExistById(id, tenantId);
+    public InstructorResponse update(String id, UpdateInstructorRequest request) {
+        //Long tenantId = TenantContext.getCurrentTenant();
+        Instructor instructor = checkIfExistById(id);
 
         instructorMapper.updatedInstructorFromRequest(request, instructor);
         instructorRepository.save(instructor);
@@ -74,9 +75,9 @@ public class InstructorServiceImpl implements InstructorService {
      * @return Dto response.
      */
     @Override
-    public InstructorResponse findById(Long id) {
-        Long tenantId = TenantContext.getCurrentTenant();
-        Instructor instructor = checkIfExistById(id, tenantId);
+    public InstructorResponse findById(String id) {
+        //Long tenantId = TenantContext.getCurrentTenant();
+        Instructor instructor = checkIfExistById(id);
         InstructorResponse response = instructorMapper.toInstructorResponse(instructor);
         return response;
     }
@@ -87,18 +88,19 @@ public class InstructorServiceImpl implements InstructorService {
      * @return number of  PageResponse that include Instructors and other information.
      */
     @Override
-    public PageResponse<Instructor> findAll(int pageNumber) {
-        Long tenantId = TenantContext.getCurrentTenant();
+    public PageResponse<InstructorResponse> findAll(int pageNumber) {
+        //Long tenantId = TenantContext.getCurrentTenant();
         Pageable pageable = PageRequest.of(pageNumber, props.getInstructorPageSize());
-        Page<Instructor> instructors = instructorRepository.findByDrivingSchool_Id(tenantId,pageable);
+        Page<Instructor> instructors = instructorRepository.findAll(pageable);
 
-        return PageResponse.<Instructor>builder()
-                .content(instructors.getContent())
+        return PageResponse.<InstructorResponse>builder()
+                .content(instructors.getContent().stream().map(instructorMapper::toInstructorResponse).collect(Collectors.toList()))
                 .totalPages(instructors.getTotalPages())
                 .totalElement(instructors.getNumberOfElements())
                 .isFirst(instructors.isFirst())
                 .isLast(instructors.isLast())
                 .build();
+        //return null;
     }
 
     /**
@@ -107,10 +109,10 @@ public class InstructorServiceImpl implements InstructorService {
      * @param id The instructor id.
      */
     @Override
-    public void delete(Long id) {
-        Long tenantId = TenantContext.getCurrentTenant();
-        Instructor instructor = checkIfExistById(id, tenantId);
-        instructorRepository.deleteByDrivingSchool_Id(tenantId, instructor);
+    public void delete(String id) {
+        //Long tenantId = TenantContext.getCurrentTenant();
+        Instructor instructor = checkIfExistById(id);
+       //instructorRepository.deleteByDrivingSchool_Id(tenantId, instructor);
     }
 
     //-------------------------------Helper Methods-------------------------------
@@ -122,29 +124,31 @@ public class InstructorServiceImpl implements InstructorService {
      * @param tenantId The id of driving school
      */
     private void checkIfExistByEmail(String email, Long tenantId) {
-        Optional<Instructor> instructor = instructorRepository.findByEmailAndTenantId(email, tenantId);
+        /*Optional<Instructor> instructor = instructorRepository.findByEmailAndTenantId(email, tenantId);
         if (instructor.isPresent()) {
             log.debug("Instructor with email {} already exists", email);
             throw new EntityExistsException("Instructor with email " + email + " already exists");
-        }
+        }*/
     }
 
     /**
      * Check if instructor exist by id, if not an exception will be thrown.
      * This method is used to ensure that an instructor with this id is existed.
      * @param id The instructor id .
-     * @param tenantId The id of driving school.
+
      * @return existed instructor.
      */
-    private Instructor checkIfExistById(Long id, Long tenantId) {
-        Optional<Instructor> instructor = instructorRepository.findByIdAndTenantId(id,  tenantId);
+    private Instructor checkIfExistById(String id) {
+        /*Optional<Instructor> instructor = instructorRepository.findByIdAndTenantId(id,  tenantId);
 
         if (instructor.isEmpty()) {
             log.debug("Instructor with id {} does not exist", id);
             throw new EntityNotFoundException("Instructor with id " + id + " does not exist");
         }
 
-        return instructor.get();
+        return instructor.get();*/
+
+        return null;
     }
 
 }

@@ -36,14 +36,14 @@ class DrivingSchoolControllerTest {
 
     private DrivingSchoolResponse drivingSchoolResponse;
     private DrivingSchoolRequest drivingSchoolRequest;
-    private long id;
+    private String id;
     private static final String BASE_URL = "/api/driving-schools";
     @Autowired
     private JsonMapper jsonMapper;
 
     @BeforeEach
     void setUp() {
-        id = 1L;
+        id = "1";
         Address address = Address.builder()
                 .city("Bochum")
                 .street("Hauptstrasse")

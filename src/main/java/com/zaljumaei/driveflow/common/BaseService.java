@@ -4,10 +4,10 @@ public interface BaseService<I, O> {
 
     O create(I request);
 
-    O update(Long id, I request);
+    O update(String id, I request);
 
-    O findById(Long id);
+    O findById(String id);
 
-    void delete(Long id);
+    void delete(String id);
 
 }

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface DrivingSchoolRepository extends JpaRepository<DrivingSchool, Long> {
+public interface DrivingSchoolRepository extends JpaRepository<DrivingSchool, String> {
 
     Optional<DrivingSchool> findByName(String drivingSchoolName);
 }

@@ -4,13 +4,35 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
-public class TenantFilter extends OncePerRequestFilter {
+@Component
+@Order(Ordered.HIGHEST_PRECEDENCE)
+public class HttpRequestTenantResolver extends OncePerRequestFilter {
 
     private static final String TENANT_HEADER_NAME = "X-Tenant-Id";
+
+    private static final List<String> EXCLUDED_PATHS = List.of(
+            "/h2-console",
+            "/swagger-ui",
+            "/v3/api-docs",
+            "/actuator/health",
+            "/api/admin"
+    );
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+
+        return EXCLUDED_PATHS.stream()
+                .anyMatch(path::startsWith);
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
@@ -23,8 +45,7 @@ public class TenantFilter extends OncePerRequestFilter {
             return;
         }
         try{
-            long tennatId = Long.parseLong(tenantIdHeader);
-            TenantContext.setCurrentTenant(tennatId);
+            TenantContext.setCurrentTenant(tenantIdHeader);
             filterChain.doFilter(request, response);
         }finally {
             TenantContext.removeCurrentTenant();
