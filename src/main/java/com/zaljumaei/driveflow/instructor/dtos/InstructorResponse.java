@@ -4,7 +4,7 @@ import lombok.Builder;
 
 @Builder
 public record InstructorResponse(
-        Long id,
+        String id,
         String firstName,
         String lastName,
         String email

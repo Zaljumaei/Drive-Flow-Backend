@@ -50,7 +50,7 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
      * @return
      */
     @Override
-    public DrivingSchoolResponse update(Long id, DrivingSchoolRequest request) {
+    public DrivingSchoolResponse update(String id, DrivingSchoolRequest request) {
         DrivingSchool existedDrivingSchool = checkIfExistsById(id);
         DrivingSchool updatedDrivingSchool =  this.drivingSchoolMapper.updateMapperDrivingSchool(request, existedDrivingSchool);
         DrivingSchoolResponse drivingSchoolResponse = this.drivingSchoolMapper.toDrivingSchoolResponse(this.drivingSchoolRepository.save(updatedDrivingSchool));
@@ -63,7 +63,7 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
      * @return drivingSchoolResponse
      */
     @Override
-    public DrivingSchoolResponse findById(Long id) {
+    public DrivingSchoolResponse findById(String id) {
         DrivingSchool drivingSchool = checkIfExistsById(id);
         return this.drivingSchoolMapper.toDrivingSchoolResponse(drivingSchool);
     }
@@ -101,7 +101,7 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
      * @param id of the drivingSchool, that will be deleted.
      */
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         DrivingSchool drivingSchool = checkIfExistsById(id);
         this.drivingSchoolRepository.delete(drivingSchool);
     }
@@ -124,7 +124,7 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
      * @param id of DrivingSchool.
      * @return the drivingSchool if founded.
      */
-    private DrivingSchool checkIfExistsById(Long id) {
+    private DrivingSchool checkIfExistsById(String id) {
         Optional<DrivingSchool> drivingSchool = this.drivingSchoolRepository.findById(id);
         if (drivingSchool.isEmpty()) {
             log.debug("No driving school found with id {}", id);

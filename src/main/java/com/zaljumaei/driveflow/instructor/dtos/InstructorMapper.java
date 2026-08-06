@@ -1,5 +1,6 @@
 package com.zaljumaei.driveflow.instructor.dtos;
 
+import com.zaljumaei.driveflow.common.PersonDetails;
 import com.zaljumaei.driveflow.instructor.domain.Instructor;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +14,16 @@ public class InstructorMapper {
      */
     public Instructor toEntity(CreateInstructorRequest instructorRequest){
         Instructor instructor = new Instructor();
-        instructor.setFirstName(instructorRequest.firstName());
-        instructor.setLastName(instructorRequest.lastName());
-        instructor.setEmail(instructorRequest.email());
-        instructor.setAddress(instructorRequest.address());
-        instructor.setPhoneNumber(instructorRequest.phoneNumber());
-        instructor.setBirthDate(instructorRequest.birthDate());
+        PersonDetails personDetails = PersonDetails.builder()
+                .firstName(instructorRequest.firstName())
+                .lastName(instructorRequest.lastName())
+                .email(instructorRequest.email())
+                .birthDate(instructorRequest.birthDate())
+                .address(instructorRequest.address())
+                .phoneNumber(instructorRequest.phoneNumber())
+                .build();
+
+        instructor.setPersonDetails(personDetails);
         return instructor;
     }
 
@@ -30,35 +35,35 @@ public class InstructorMapper {
     public InstructorResponse toInstructorResponse(Instructor instructor){
         return InstructorResponse.builder()
                 .id(instructor.getId())
-                .firstName(instructor.getFirstName())
-                .lastName(instructor.getLastName())
-                .email(instructor.getEmail())
+                .firstName(instructor.getPersonDetails().getFirstName())
+                .lastName(instructor.getPersonDetails().getLastName())
+                .email(instructor.getPersonDetails().getEmail())
                 .build();
     }
 
     public void updatedInstructorFromRequest(UpdateInstructorRequest request,Instructor instructor){
         if (request.firstName() != null) {
-            instructor.setFirstName(request.firstName());
+            instructor.getPersonDetails().setFirstName(request.firstName());
         }
 
         if (request.lastName() != null) {
-            instructor.setLastName(request.lastName());
+            instructor.getPersonDetails().setLastName(request.lastName());
         }
 
         if (request.birthDate() != null) {
-            instructor.setBirthDate(request.birthDate());
+            instructor.getPersonDetails().setBirthDate(request.birthDate());
         }
 
         if (request.phoneNumber() != null) {
-            instructor.setPhoneNumber(request.phoneNumber());
+            instructor.getPersonDetails().setPhoneNumber(request.phoneNumber());
         }
 
         if (request.address() != null) {
-            instructor.setAddress(request.address());
+            instructor.getPersonDetails().setAddress(request.address());
         }
 
         if (request.email() != null) {
-            instructor.setEmail(request.email());
+            instructor.getPersonDetails().setEmail(request.email());
         }
     }
 }

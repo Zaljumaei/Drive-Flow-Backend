@@ -26,7 +26,7 @@ public class DrivingSchoolController {
      * @return the response after updated
      */
     @PutMapping(value = "/edit/{id}")
-    public ResponseEntity<DrivingSchoolResponse> update(@PathVariable Long id, @RequestBody DrivingSchoolRequest drivingSchoolRequest) {
+    public ResponseEntity<DrivingSchoolResponse> update(@PathVariable String id, @RequestBody DrivingSchoolRequest drivingSchoolRequest) {
         DrivingSchoolResponse response = drivingSchoolService.update(id,drivingSchoolRequest);
         return ResponseEntity.ok(response);
     }

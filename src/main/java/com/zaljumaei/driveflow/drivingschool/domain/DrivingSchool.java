@@ -1,12 +1,14 @@
 package com.zaljumaei.driveflow.drivingschool.domain;
 
+import com.zaljumaei.driveflow.common.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import com.zaljumaei.driveflow.common.AbstractEntity;
 import com.zaljumaei.driveflow.common.Address;
 import com.zaljumaei.driveflow.instructor.domain.Instructor;
 import com.zaljumaei.driveflow.student.domain.Student;
@@ -18,7 +20,13 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-public class DrivingSchool extends AbstractEntity {
+@AllArgsConstructor
+public class DrivingSchool extends BaseEntity {
+
+    private String name;
+
+    @Email
+    private String email;
 
     @Embedded
     private Address address;
@@ -36,6 +44,10 @@ public class DrivingSchool extends AbstractEntity {
 
     @OneToMany(cascade = CascadeType.ALL)
     private Set<LicenseClass> licenseClasses = new HashSet<LicenseClass>();
+
+    public DrivingSchool() {
+
+    }
 
     //private Set<Lesson>
 
