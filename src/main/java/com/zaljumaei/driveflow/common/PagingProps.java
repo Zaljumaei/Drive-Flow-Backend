@@ -20,11 +20,11 @@ public class PagingProps {
     private int drivingSchoolPageSize = 50;
 
     @Min(value = 5, message = "must be between 5 and 50.")
-    @Max(value = 50, message = "ust be between 5 and 50.")
+    @Max(value = 50, message = "must be between 5 and 50.")
     private int instructorPageSize = 20;
 
     @Min(value = 5, message = "must be between 5 and 50.")
-    @Max(value = 50, message = "ust be between 5 and 50.")
+    @Max(value = 50, message = "must be between 5 and 50.")
     private int studentPageSize = 20;
 
     private int vehiclePageSize = 20;

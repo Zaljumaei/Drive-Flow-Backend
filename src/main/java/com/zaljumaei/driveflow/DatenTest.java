@@ -19,9 +19,8 @@ import java.util.stream.IntStream;
 @Component
 public class DatenTest implements CommandLineRunner {
 
-    private Faker faker = new Faker();
-
-    private DrivingSchool  drivingSchool;
+    @Autowired
+    private Faker faker;
 
     @Autowired
     private DrivingSchoolMapper drivingSchoolMapper;
