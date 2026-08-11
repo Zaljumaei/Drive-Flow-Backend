@@ -41,6 +41,11 @@ public class InstructorMapper {
                 .build();
     }
 
+    /**
+     * Update existed instructor entity from request.
+     * @param request The request with new data
+     * @param instructor The entity to be updated.
+     */
     public void updatedInstructorFromRequest(UpdateInstructorRequest request,Instructor instructor){
         if (request.firstName() != null) {
             instructor.getPersonDetails().setFirstName(request.firstName());

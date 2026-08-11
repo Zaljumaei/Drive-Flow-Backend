@@ -43,8 +43,7 @@ public class InstructorServiceImpl implements InstructorService {
      */
     @Override
     public InstructorResponse create(CreateInstructorRequest request) {
-        //Long tenantId = TenantContext.getCurrentTenant();
-        //checkIfExistByEmail(request.email(), tenantId);
+        checkIfExistByEmail(request.email());
 
         Instructor instructor = instructorMapper.toEntity(request);
         instructorRepository.save(instructor);
@@ -60,9 +59,7 @@ public class InstructorServiceImpl implements InstructorService {
      */
     @Override
     public InstructorResponse update(String id, UpdateInstructorRequest request) {
-        //Long tenantId = TenantContext.getCurrentTenant();
         Instructor instructor = checkIfExistById(id);
-
         instructorMapper.updatedInstructorFromRequest(request, instructor);
         instructorRepository.save(instructor);
         InstructorResponse response = instructorMapper.toInstructorResponse(instructor);
@@ -76,7 +73,6 @@ public class InstructorServiceImpl implements InstructorService {
      */
     @Override
     public InstructorResponse findById(String id) {
-        //Long tenantId = TenantContext.getCurrentTenant();
         Instructor instructor = checkIfExistById(id);
         InstructorResponse response = instructorMapper.toInstructorResponse(instructor);
         return response;
@@ -89,7 +85,6 @@ public class InstructorServiceImpl implements InstructorService {
      */
     @Override
     public PageResponse<InstructorResponse> findAll(int pageNumber) {
-        //Long tenantId = TenantContext.getCurrentTenant();
         Pageable pageable = PageRequest.of(pageNumber, props.getInstructorPageSize());
         Page<Instructor> instructors = instructorRepository.findAll(pageable);
 
@@ -100,7 +95,6 @@ public class InstructorServiceImpl implements InstructorService {
                 .isFirst(instructors.isFirst())
                 .isLast(instructors.isLast())
                 .build();
-        //return null;
     }
 
     /**
@@ -110,9 +104,8 @@ public class InstructorServiceImpl implements InstructorService {
      */
     @Override
     public void delete(String id) {
-        //Long tenantId = TenantContext.getCurrentTenant();
         Instructor instructor = checkIfExistById(id);
-       //instructorRepository.deleteByDrivingSchool_Id(tenantId, instructor);
+        instructorRepository.delete(instructor);
     }
 
     //-------------------------------Helper Methods-------------------------------
@@ -121,14 +114,13 @@ public class InstructorServiceImpl implements InstructorService {
      * check if instructor with this email is already existed and throw an exception.
      * This method can be used to ensure that no such email is used.
      * @param email The email of instructor
-     * @param tenantId The id of driving school
      */
-    private void checkIfExistByEmail(String email, Long tenantId) {
-        /*Optional<Instructor> instructor = instructorRepository.findByEmailAndTenantId(email, tenantId);
+    private void checkIfExistByEmail(String email) {
+        Optional<Instructor> instructor = instructorRepository.findByPersonDetails_Email(email);
         if (instructor.isPresent()) {
             log.debug("Instructor with email {} already exists", email);
             throw new EntityExistsException("Instructor with email " + email + " already exists");
-        }*/
+        }
     }
 
     /**
@@ -139,16 +131,14 @@ public class InstructorServiceImpl implements InstructorService {
      * @return existed instructor.
      */
     private Instructor checkIfExistById(String id) {
-        /*Optional<Instructor> instructor = instructorRepository.findByIdAndTenantId(id,  tenantId);
+        Optional<Instructor> instructor = instructorRepository.findById(id);
 
         if (instructor.isEmpty()) {
             log.debug("Instructor with id {} does not exist", id);
             throw new EntityNotFoundException("Instructor with id " + id + " does not exist");
         }
 
-        return instructor.get();*/
-
-        return null;
+        return instructor.get();
     }
 
 }

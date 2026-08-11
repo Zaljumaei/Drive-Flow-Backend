@@ -4,6 +4,7 @@ import com.zaljumaei.driveflow.common.Address;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 
 import java.time.LocalDate;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
  * this dto contain more date than {@link InstructorRequest},
  * which are needed by creating the instructor.
  */
+@Builder
 public record CreateInstructorRequest(
         @NotBlank String firstName,
         @NotBlank String lastName,
