@@ -5,7 +5,6 @@ import com.zaljumaei.driveflow.common.PagingProps;
 import com.zaljumaei.driveflow.instructor.domain.Instructor;
 import com.zaljumaei.driveflow.instructor.dtos.*;
 import com.zaljumaei.driveflow.instructor.repository.InstructorRepository;
-import com.zaljumaei.driveflow.tenantmanagement.TenantContext;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -60,7 +59,7 @@ public class InstructorServiceImpl implements InstructorService {
     @Override
     public InstructorResponse update(String id, UpdateInstructorRequest request) {
         Instructor instructor = checkIfExistById(id);
-        instructorMapper.updatedInstructorFromRequest(request, instructor);
+        instructorMapper.updateInstructorFromRequest(request, instructor);
         instructorRepository.save(instructor);
         InstructorResponse response = instructorMapper.toInstructorResponse(instructor);
         return response;
@@ -127,7 +126,6 @@ public class InstructorServiceImpl implements InstructorService {
      * Check if instructor exist by id, if not an exception will be thrown.
      * This method is used to ensure that an instructor with this id is existed.
      * @param id The instructor id .
-
      * @return existed instructor.
      */
     private Instructor checkIfExistById(String id) {
