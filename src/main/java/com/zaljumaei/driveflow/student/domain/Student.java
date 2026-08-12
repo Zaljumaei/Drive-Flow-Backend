@@ -22,7 +22,6 @@ public class Student extends TenantScopedEntity {
 
     //Student can register for multiple driving license
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "license_id")
     private Set<LicenseClass> licenseClass = new HashSet<>();
 
     @ManyToOne
@@ -32,6 +31,11 @@ public class Student extends TenantScopedEntity {
     public void addLicenseClass(LicenseClass licenseClass) {
         licenseClass.setStudent(this);
         this.licenseClass.add(licenseClass);
+    }
+
+    public void removeLicenseClass(LicenseClass licenseClass) {
+        licenseClass.setStudent(null);
+        this.licenseClass.remove(licenseClass);
     }
 
 }

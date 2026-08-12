@@ -61,9 +61,10 @@ public class StudentServiceImpl implements  StudentService {
     }
 
     /**
-     * Find all students of driving school, the number of students is specified in {@link PagingProps}.
+     * Find specific page of students of driving school, the number of students is specified in {@link PagingProps}.
+     * Paging is applied here to limit the result for optimized the performance.
      * @param page The number of page, it starts by zero.
-     * @return student of the driving school.
+     * @return Page of the student.
      */
     @Override
     public PageResponse<StudentResponse> findAll(int page) {

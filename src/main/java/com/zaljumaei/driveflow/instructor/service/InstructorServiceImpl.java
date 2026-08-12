@@ -78,8 +78,10 @@ public class InstructorServiceImpl implements InstructorService {
     }
 
     /**
-     * Find number of instructors of the driving school.
+     * Find specific page of instructors of the driving school.
      * The number of instructors is specified in {@link PagingProps}
+     * Paging is applied here to limit the result for optimized the performance.
+     * @param pageNumber number of page.
      * @return number of  PageResponse that include Instructors and other information.
      */
     @Override
