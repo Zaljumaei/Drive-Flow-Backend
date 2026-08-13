@@ -30,7 +30,7 @@ public class Instructor extends TenantScopedEntity {
      */
     @ManyToMany
     @JoinTable(
-            name = "license_classes",
+            name = "instructor_license_classes",
             joinColumns = @JoinColumn(name = "instructor_id"),
             inverseJoinColumns = @JoinColumn(name = "license_id")
     )

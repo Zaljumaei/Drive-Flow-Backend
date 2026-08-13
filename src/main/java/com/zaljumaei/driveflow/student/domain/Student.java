@@ -9,6 +9,9 @@ import com.zaljumaei.driveflow.drivingschool.domain.LicenseClass;
 import com.zaljumaei.driveflow.drivingschool.domain.DrivingSchool;
 import com.zaljumaei.driveflow.instructor.domain.Instructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -17,19 +20,22 @@ public class Student extends TenantScopedEntity {
     @Embedded
     private PersonDetails personDetails;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private LicenseClass driverLicenseClass;
-
-    @ManyToOne
-    @JoinColumn(name = "school_id")
-    private DrivingSchool drivingSchool;
-
-    @OneToOne
-    @JoinColumn(name = "license_id")
-    private LicenseClass licenseClass;
+    //Student can register for multiple driving license
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<LicenseClass> licenseClass = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
+
+    public void addLicenseClass(LicenseClass licenseClass) {
+        licenseClass.setStudent(this);
+        this.licenseClass.add(licenseClass);
+    }
+
+    public void removeLicenseClass(LicenseClass licenseClass) {
+        licenseClass.setStudent(null);
+        this.licenseClass.remove(licenseClass);
+    }
 
 }
