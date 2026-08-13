@@ -21,8 +21,8 @@ public class LicenseClass extends TenantScopedEntity {
 
     private String description;
 
-    @ManyToOne
-    private Student student;
+    @ManyToMany
+    private Set<Student> student;
 
     @ManyToMany(mappedBy = "licenseClasses")
     private Set<Instructor> instructors;
