@@ -1,7 +1,7 @@
 package com.zaljumaei.driveflow.student.dtos;
 
 import com.zaljumaei.driveflow.common.Address;
-import com.zaljumaei.driveflow.drivingschool.domain.LicenseClass;
+import com.zaljumaei.driveflow.licenseclass.LicenseClass;
 
 import jakarta.validation.constraints.Email;
 import lombok.Builder;
