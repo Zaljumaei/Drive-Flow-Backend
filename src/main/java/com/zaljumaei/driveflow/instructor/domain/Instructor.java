@@ -39,5 +39,21 @@ public class Instructor extends TenantScopedEntity {
     @OneToMany
     private Set<Student> students = new HashSet<>();
 
+    //utility methods to add and remove student and licenseclasses
+    public boolean addStudent(Student student) {
+        return this.students.add(student);
+    }
+
+    public boolean removeStudent(Student student) {
+        return this.students.remove(student);
+    }
+
+    public boolean addLicenseClass(LicenseClass licenseClass) {
+        return this.licenseClasses.add(licenseClass);
+    }
+
+    public boolean removeLicenseClass(LicenseClass licenseClass) {
+        return this.licenseClasses.remove(licenseClass);
+    }
 
 }
