@@ -21,7 +21,12 @@ public class Student extends TenantScopedEntity {
     private PersonDetails personDetails;
 
     //Student can register for multiple driving license
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+            name = "student_license_classes",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "license_class_id")
+    )
     private Set<LicenseClass> licenseClass = new HashSet<>();
 
     @ManyToOne
@@ -29,12 +34,10 @@ public class Student extends TenantScopedEntity {
     private Instructor instructor;
 
     public void addLicenseClass(LicenseClass licenseClass) {
-        licenseClass.setStudent(this);
         this.licenseClass.add(licenseClass);
     }
 
     public void removeLicenseClass(LicenseClass licenseClass) {
-        licenseClass.setStudent(null);
         this.licenseClass.remove(licenseClass);
     }
 

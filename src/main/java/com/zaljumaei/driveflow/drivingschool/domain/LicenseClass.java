@@ -13,17 +13,13 @@ import com.zaljumaei.driveflow.student.domain.Student;
 
 import java.util.Set;
 
-//TODO should this class be enum to include known LicenseClasses in Germany like A B..... or we let every school add them manually
 @Entity
 @Getter
 @Setter
 public class LicenseClass extends TenantScopedEntity {
 
+    private String name;
+
     private String description;
 
-    @ManyToOne
-    private Student student;
-
-    @ManyToMany(mappedBy = "licenseClasses")
-    private Set<Instructor> instructors;
 }
