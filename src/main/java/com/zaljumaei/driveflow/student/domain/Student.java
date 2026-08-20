@@ -1,12 +1,11 @@
 package com.zaljumaei.driveflow.student.domain;
 
 import com.zaljumaei.driveflow.common.TenantScopedEntity;
-import com.zaljumaei.driveflow.licenseclass.StudentLicenseEnrollment;
+import com.zaljumaei.driveflow.student.enrollment.StudentLicenseEnrollment;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import com.zaljumaei.driveflow.common.PersonDetails;
-import com.zaljumaei.driveflow.licenseclass.LicenseClass;
 import com.zaljumaei.driveflow.instructor.domain.Instructor;
 
 import java.util.HashSet;

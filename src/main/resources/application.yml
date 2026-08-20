@@ -26,4 +26,5 @@ paging:
     drivingSchoolPageSize: 50
     instructorPageSize: 20
     studentPageSize: 20
+    studentEnrollmentPageSize: 20
     vehiclePageSize: 20
