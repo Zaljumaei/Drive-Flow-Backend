@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.zaljumaei.driveflow.drivingschool.domain.DrivingSchool;
 import com.zaljumaei.driveflow.drivingschool.dtos.DrivingSchoolMapper;
@@ -48,7 +50,7 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
      * @return
      */
     @Override
-    public DrivingSchoolResponse update(Long id, DrivingSchoolRequest request) {
+    public DrivingSchoolResponse update(String id, DrivingSchoolRequest request) {
         DrivingSchool existedDrivingSchool = checkIfExistsById(id);
         DrivingSchool updatedDrivingSchool =  this.drivingSchoolMapper.updateMapperDrivingSchool(request, existedDrivingSchool);
         DrivingSchoolResponse drivingSchoolResponse = this.drivingSchoolMapper.toDrivingSchoolResponse(this.drivingSchoolRepository.save(updatedDrivingSchool));
@@ -61,9 +63,37 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
      * @return drivingSchoolResponse
      */
     @Override
-    public DrivingSchoolResponse findById(Long id) {
+    public DrivingSchoolResponse findById(String id) {
         DrivingSchool drivingSchool = checkIfExistsById(id);
         return this.drivingSchoolMapper.toDrivingSchoolResponse(drivingSchool);
+    }
+
+    /**
+     * Find a DrivingSchool by its name
+     * @param drivingSchoolName name of DrivingSchool
+     * @return dto of drivingSchool
+     */
+    @Override
+    public DrivingSchoolResponse findByName(String drivingSchoolName) {
+        Optional<DrivingSchool> drivingSchool = this.drivingSchoolRepository.findByName(drivingSchoolName);
+        if (drivingSchool.isPresent()) {
+            return drivingSchoolMapper.toDrivingSchoolResponse(drivingSchool.get());
+        }else {
+            log.error("DrivingSchool Not Found with name {}", drivingSchoolName);
+            throw new EntityNotFoundException("DrivingSchool not found with name.");
+        }
+    }
+
+    @Override
+    public List<DrivingSchoolResponse> findAllDrivingSchools() {
+        List<DrivingSchool> drivingSchools = this.drivingSchoolRepository.findAll();
+        if (drivingSchools.isEmpty()) {
+            log.error("DrivingSchool Not Found");
+            throw new EntityNotFoundException("DrivingSchool not found");
+        }else  {
+            log.info("DrivingSchools Found: "+drivingSchools.size());
+            return drivingSchools.stream().map(drivingSchoolMapper::toDrivingSchoolResponse).collect(Collectors.toList());
+        }
     }
 
     /**
@@ -71,7 +101,7 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
      * @param id of the drivingSchool, that will be deleted.
      */
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         DrivingSchool drivingSchool = checkIfExistsById(id);
         this.drivingSchoolRepository.delete(drivingSchool);
     }
@@ -94,7 +124,7 @@ public class DrivingSchoolServiceImpl implements DrivingSchoolService {
      * @param id of DrivingSchool.
      * @return the drivingSchool if founded.
      */
-    private DrivingSchool checkIfExistsById(Long id) {
+    private DrivingSchool checkIfExistsById(String id) {
         Optional<DrivingSchool> drivingSchool = this.drivingSchoolRepository.findById(id);
         if (drivingSchool.isEmpty()) {
             log.debug("No driving school found with id {}", id);

@@ -54,13 +54,13 @@ class DrivingSchoolServiceImplTest {
                 new DrivingSchoolRequest("Max-Fahrschule", "2314 9988", address);
 
         this.testDrivingSchool = new DrivingSchool();
-        this.testDrivingSchool.setId(1L);
+        this.testDrivingSchool.setId("1");
         this.testDrivingSchool.setAddress(address);
         this.testDrivingSchool.setPhoneNumber("2314 9988");
         this.testDrivingSchool.setName("Max-Fahrschule");
 
         this.testDrivingSchoolResponse =
-                new DrivingSchoolResponse(1L, "Max-Fahrschule", "2314 9988");
+                new DrivingSchoolResponse("1", "Max-Fahrschule", "2314 9988");
 
 
     }
@@ -126,7 +126,7 @@ class DrivingSchoolServiceImplTest {
         @DisplayName("Should update existing DrivingSchool successfully")
         void shouldUpdateDrivingSchoolSuccessfully() {
             // given
-            Long drivingSchoolId = testDrivingSchool.getId();
+            String drivingSchoolId = testDrivingSchool.getId();
 
             DrivingSchool updatedDrivingSchool = new DrivingSchool();
             updatedDrivingSchool.setId(drivingSchoolId);
@@ -174,7 +174,7 @@ class DrivingSchoolServiceImplTest {
         @DisplayName("Should throw exception when DrivingSchool is not found")
         void shouldThrowExceptionWhenEntityNotFound() {
             // given
-            Long drivingSchoolId = testDrivingSchool.getId();
+            String drivingSchoolId = testDrivingSchool.getId();
 
             when(drivingSchoolRepository.findById(drivingSchoolId))
                     .thenReturn(Optional.empty());
@@ -202,9 +202,9 @@ class DrivingSchoolServiceImplTest {
     class DeleteDrivingSchoolTest {
 
         @Test
-        @DisplayName("should delete DrivingSchool entity sucessfully")
+        @DisplayName("should delete DrivingSchool entity successfully")
         void shouldDeleteDrivingSchoolSuccessfully() {
-            Long drivingSchoolId = testDrivingSchool.getId();
+            String drivingSchoolId = testDrivingSchool.getId();
             when(drivingSchoolRepository.findById(drivingSchoolId)).thenReturn(Optional.of(testDrivingSchool));
 
             assertDoesNotThrow(() -> drivingSchoolServiceImpl.delete(drivingSchoolId));
@@ -214,7 +214,7 @@ class DrivingSchoolServiceImplTest {
         @Test
         @DisplayName("should throw Exception when Entity not found.")
         void shouldThrowExceptionWhenEntityNotFound() {
-            Long drivingSchoolId = testDrivingSchool.getId();
+            String drivingSchoolId = testDrivingSchool.getId();
             when(drivingSchoolRepository.findById(drivingSchoolId)).thenReturn(Optional.empty());
             EntityNotFoundException exception = assertThrows(
                     EntityNotFoundException.class,
@@ -233,7 +233,7 @@ class DrivingSchoolServiceImplTest {
         @DisplayName("Should return DrivingSchool when id exists")
         void shouldReturnDrivingSchoolWhenIdExists() {
             // given
-            Long id = testDrivingSchool.getId();
+            String id = testDrivingSchool.getId();
 
             when(drivingSchoolRepository.findById(id))
                     .thenReturn(Optional.of(testDrivingSchool));
@@ -255,7 +255,7 @@ class DrivingSchoolServiceImplTest {
         @DisplayName("Should throw exception when DrivingSchool is not found")
         void shouldThrowExceptionWhenDrivingSchoolNotFound() {
             // given
-            Long id = 99L;
+            String id = "99L";
 
             when(drivingSchoolRepository.findById(id))
                     .thenReturn(Optional.empty());

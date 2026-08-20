@@ -1,31 +1,47 @@
 package com.zaljumaei.driveflow.student.domain;
 
+import com.zaljumaei.driveflow.common.TenantScopedEntity;
+import com.zaljumaei.driveflow.student.enrollment.StudentLicenseEnrollment;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import com.zaljumaei.driveflow.common.BasePersonEntity;
-import com.zaljumaei.driveflow.drivingschool.domain.LicenseClass;
-import com.zaljumaei.driveflow.drivingschool.domain.DrivingSchool;
+import com.zaljumaei.driveflow.common.PersonDetails;
 import com.zaljumaei.driveflow.instructor.domain.Instructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class Student extends BasePersonEntity {
+public class Student extends TenantScopedEntity {
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private LicenseClass driverLicenseClass;
+    @Embedded
+    private PersonDetails personDetails;
 
-    @ManyToOne
-    @JoinColumn(name = "school_id")
-    private DrivingSchool drivingSchool;
+    //Student can register for multiple driving license
+    /*@ManyToMany
+    @JoinTable(
+            name = "student_license_classes",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "license_class_id")
+    )
+    private Set<LicenseClass> licenseClass = new HashSet<>();
+    */
 
-    @OneToOne
-    @JoinColumn(name = "license_id")
-    private LicenseClass licenseClass;
+    @OneToMany(mappedBy = "student")
+    private Set<StudentLicenseEnrollment> studentLicenseClasses = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "instructor_id")
     private Instructor instructor;
+
+    public void addLicenseClass(StudentLicenseEnrollment studentLicenseClass) {
+        this.studentLicenseClasses.add(studentLicenseClass);
+    }
+
+    public void removeLicenseClass(StudentLicenseEnrollment studentLicenseClass) {
+        this.studentLicenseClasses.remove(studentLicenseClass);
+    }
 
 }
