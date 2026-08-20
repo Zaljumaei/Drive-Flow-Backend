@@ -23,9 +23,6 @@ public class StudentMapper {
                 .address(request.address())
                 .build();
         student.setPersonDetails(personDetails);
-        if (!request.licenseClass().isEmpty()){
-            student.setLicenseClass(request.licenseClass());
-        }
         return student;
     }
 
@@ -73,9 +70,6 @@ public class StudentMapper {
             student.getPersonDetails().setEmail(request.email());
         }
 
-        if (!request.licenseClass().isEmpty()) {
-            student.setLicenseClass(request.licenseClass());
-        }
 
     }
 }

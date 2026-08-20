@@ -60,7 +60,7 @@ public class StudentController {
      * @param request The Dto containing the new data
      * @return StudentResponse after update.
      */
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<StudentResponse> updateStudentById(@PathVariable String id, @RequestBody UpdateStudentRequest request) {
         return ResponseEntity.ok().body(studentService.update(id, request));
     }

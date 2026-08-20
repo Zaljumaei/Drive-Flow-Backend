@@ -6,11 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import com.zaljumaei.driveflow.common.PersonDetails;
-import com.zaljumaei.driveflow.drivingschool.domain.LicenseClass;
-import com.zaljumaei.driveflow.drivingschool.domain.DrivingSchool;
+import com.zaljumaei.driveflow.licenseclass.LicenseClass;
 import com.zaljumaei.driveflow.student.domain.Student;
-import org.hibernate.annotations.TargetEmbeddable;
-import org.hibernate.boot.internal.Target;
 
 import java.util.HashSet;
 import java.util.Set;

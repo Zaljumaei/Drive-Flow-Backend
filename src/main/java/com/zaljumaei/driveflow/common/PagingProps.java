@@ -27,5 +27,7 @@ public class PagingProps {
     @Max(value = 50, message = "must be between 5 and 50.")
     private int studentPageSize = 20;
 
+    private int studentEnrollmentPageSize = 30;
+
     private int vehiclePageSize = 20;
 }
