@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * It delegates the actual operations to the service layer.
  */
 @RestController
-@RequestMapping("api/student-enrollment/")
+@RequestMapping("api/student-enrollment")
 public class StudentEnrollmentController {
 
     private final StudentEnrollmentService studentEnrollmentService;
