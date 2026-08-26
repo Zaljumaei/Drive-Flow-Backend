@@ -19,6 +19,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
 public class StudentLicenseEnrollment extends TenantScopedEntity {
 
     /**

@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Class to manage the status for TheoryLesson
+ * Class to manage student and the status for TheoryLesson.
  */
 @Entity
 public class LessonAttendance extends TenantScopedEntity {
