@@ -14,7 +14,7 @@ import com.zaljumaei.driveflow.common.TenantScopedEntity;
 public class LicenseClass extends TenantScopedEntity {
 
     @Enumerated(EnumType.STRING)
-    private String code;
+    private LicenseClassCode code;
 
     private String name;
 

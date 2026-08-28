@@ -19,16 +19,6 @@ public class Student extends TenantScopedEntity {
     @Embedded
     private PersonDetails personDetails;
 
-    //Student can register for multiple driving license
-    /*@ManyToMany
-    @JoinTable(
-            name = "student_license_classes",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "license_class_id")
-    )
-    private Set<LicenseClass> licenseClass = new HashSet<>();
-    */
-
     @OneToMany(mappedBy = "student")
     private Set<StudentLicenseEnrollment> studentLicenseClasses = new HashSet<>();
 

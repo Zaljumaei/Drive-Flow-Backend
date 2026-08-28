@@ -35,9 +35,9 @@ public class StudentEnrollmentMapper {
 
         if (studentEnrollmentRequest.startDate() != null) {
             studentLicenseEnrollment.setStartDate(studentEnrollmentRequest.startDate());
-            studentLicenseEnrollment.setStudentLicenseStatus(StudentEnrollmentLicenseStatus.ACTIVE);
+            studentLicenseEnrollment.setStudentEnrollmentLicenseStatus(StudentEnrollmentLicenseStatus.ACTIVE);
         }else {
-            studentLicenseEnrollment.setStudentLicenseStatus(StudentEnrollmentLicenseStatus.PLANNED);
+            studentLicenseEnrollment.setStudentEnrollmentLicenseStatus(StudentEnrollmentLicenseStatus.PLANNED);
         }
 
         return studentLicenseEnrollment;
@@ -53,10 +53,10 @@ public class StudentEnrollmentMapper {
 
         return StudentEnrollmentResponse.builder()
                 .enrollmentId(studentLicenseEnrollment.getId())
-                .licenseClassCode(studentLicenseEnrollment.getLicenseClass().getCode())
+                .licenseClassCode(studentLicenseEnrollment.getLicenseClass().getCode().toString())
                 .registrationDate(studentLicenseEnrollment.getRegistrationDate())
                 .startDate(studentLicenseEnrollment.getStartDate())
-                .enrollmentStatus(studentLicenseEnrollment.getStudentLicenseStatus().toString())
+                .enrollmentStatus(studentLicenseEnrollment.getStudentEnrollmentLicenseStatus().toString())
                 .build();
     }
 

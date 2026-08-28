@@ -1,18 +1,28 @@
 package com.zaljumaei.driveflow.lesson.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import com.zaljumaei.driveflow.student.domain.Student;
+import com.zaljumaei.driveflow.student.enrollment.StudentLicenseEnrollment;
 import com.zaljumaei.driveflow.vehicle.domain.Vehicle;
 
+/**
+ * Entity class for practical lessons.
+ * Since this lesson is just need a student and an instructor,
+ * we don't need to use extra entity to store more information like the case by theory lessons.
+ */
 @Entity
+@Getter
+@Setter
 public class PracticalLesson extends Lesson {
 
-    @OneToOne
-    private Student student;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "enrollment_id")
+    private StudentLicenseEnrollment enrollment;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
     private PracticalLessonStatus status;
