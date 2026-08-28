@@ -13,7 +13,7 @@ import com.zaljumaei.driveflow.instructor.domain.Instructor;
 /**
  * Abstract parent class for theory and practical lesson.
  * Any lesson is done by one instructor,
- * so we mapped the instructor to this class and not to the child classes (Theory and Practical).
+ * so we mapped the instructor to this class and not to Attendance.
  */
 @MappedSuperclass
 @Getter

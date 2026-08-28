@@ -19,5 +19,4 @@ public class TheoryLesson extends Lesson {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
     private TheoryTopic topic;
-
 }
