@@ -101,14 +101,14 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         }
 
         if(!request.studentEnrollmentStatus().isBlank()){
-            studentLicenseEnrollment.setStudentLicenseStatus(StudentEnrollmentLicenseStatus.valueOf( request.studentEnrollmentStatus()));
+            studentLicenseEnrollment.setStudentEnrollmentLicenseStatus(StudentEnrollmentLicenseStatus.valueOf( request.studentEnrollmentStatus()));
         }
 
         if (request.startDate() != null){
             LocalDate startDate = checkIfDateAfterRegistration(request.startDate(), studentLicenseEnrollment.getStartDate());
 
             studentLicenseEnrollment.setStartDate(startDate);
-            studentLicenseEnrollment.setStudentLicenseStatus(StudentEnrollmentLicenseStatus.ACTIVE);
+            studentLicenseEnrollment.setStudentEnrollmentLicenseStatus(StudentEnrollmentLicenseStatus.ACTIVE);
         }
 
         if (!request.notes().isBlank()){
@@ -153,7 +153,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         LocalDate startDate = checkIfDateAfterRegistration(request.date(), studentEnrollment.getStartDate());
 
         studentEnrollment.setStartDate(startDate);
-        studentEnrollment.setStudentLicenseStatus(StudentEnrollmentLicenseStatus.ACTIVE);
+        studentEnrollment.setStudentEnrollmentLicenseStatus(StudentEnrollmentLicenseStatus.ACTIVE);
         if(!request.notes().isBlank()){
             studentEnrollment.setNotes(request.notes());
         }
@@ -176,7 +176,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         LocalDate complete = checkIfDateAfterRegistration(request.date(), studentEnrollment.getRegistrationDate());
 
         studentEnrollment.setCompletedDate(complete);
-        studentEnrollment.setStudentLicenseStatus(StudentEnrollmentLicenseStatus.COMPLETED);
+        studentEnrollment.setStudentEnrollmentLicenseStatus(StudentEnrollmentLicenseStatus.COMPLETED);
         if(!request.notes().isBlank()){
             studentEnrollment.setNotes(request.notes());
         }
@@ -199,7 +199,7 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         LocalDate cancelDate = checkIfDateAfterRegistration(request.date(), studentLicenseEnrollment.getRegistrationDate());
 
         studentLicenseEnrollment.setCancelledDate(cancelDate);
-        studentLicenseEnrollment.setStudentLicenseStatus(StudentEnrollmentLicenseStatus.CANCELLED);
+        studentLicenseEnrollment.setStudentEnrollmentLicenseStatus(StudentEnrollmentLicenseStatus.CANCELLED);
         if(!request.notes().isBlank()){
             studentLicenseEnrollment.setNotes(request.notes());
         }

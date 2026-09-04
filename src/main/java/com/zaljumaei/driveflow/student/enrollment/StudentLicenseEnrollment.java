@@ -1,6 +1,8 @@
 package com.zaljumaei.driveflow.student.enrollment;
 
 import com.zaljumaei.driveflow.common.TenantScopedEntity;
+import com.zaljumaei.driveflow.lesson.domain.PracticalLesson;
+import com.zaljumaei.driveflow.lesson.domain.TheoryLessonAttendance;
 import com.zaljumaei.driveflow.licenseclass.LicenseClass;
 import com.zaljumaei.driveflow.student.domain.Student;
 import jakarta.persistence.*;
@@ -10,15 +12,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- *Association entity class to manage the Student and LicenseClass
+ * Association entity class to manage the Student and LicenseClass
  */
 
 @Entity
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
 public class StudentLicenseEnrollment extends TenantScopedEntity {
 
     /**
@@ -34,7 +39,13 @@ public class StudentLicenseEnrollment extends TenantScopedEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private StudentEnrollmentLicenseStatus studentLicenseStatus;
+    private StudentEnrollmentLicenseStatus studentEnrollmentLicenseStatus;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "studentLicenseEnrollment")
+    private Set<TheoryLessonAttendance> theoryLessonAttendances = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "enrollment")
+    private Set<PracticalLesson> practicalLessons = new HashSet<>();
 
     /**
      * Registration date of enrollment, that can be helpful for marketing purpose.
