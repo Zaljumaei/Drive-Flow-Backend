@@ -7,7 +7,7 @@ public interface TheoryTopicService {
 
     TheoryTopic addTopic(TheoryTopicRequest request);
 
-    void deleteTopic(TheoryTopicRequest request);
+    void deleteTopic(String theoryTopicId);
 
-    TheoryTopic updateTopic(TheoryTopicRequest request);
+    TheoryTopic updateTopic(TheoryTopicRequest request, String theoryTopicId);
 }
