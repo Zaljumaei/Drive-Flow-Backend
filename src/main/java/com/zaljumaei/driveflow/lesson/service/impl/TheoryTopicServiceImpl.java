@@ -82,8 +82,9 @@ public class TheoryTopicServiceImpl implements TheoryTopicService {
     }
 
     /**
-     * Check if the topic with this title is alread exist for this DrivingSchool,
+     * Check if the topic with this title is already exist for this DrivingSchool,
      * if so, then throw an exception.
+     * to avoid duplicate.
      *
      * @param title The title of the Topic.
      */
@@ -94,9 +95,16 @@ public class TheoryTopicServiceImpl implements TheoryTopicService {
                 });
     }
 
+    /**
+     * Chek if theory topic is existed by its id, then return it if so,
+     * otherwise arise a EntityNotFound exception.
+     *
+     * @param theoryTopicId The id of theory topic.
+     * @return The existed Theory topic.
+     */
     private TheoryTopic checkIfExistById(String theoryTopicId){
         TheoryTopic theoryTopic = theoryTopicRepository.findById(theoryTopicId)
-                .orElseThrow(()-> new EntityNotFoundException("Theorytopic with Id " +theoryTopicId+" not found!."));
+                .orElseThrow(()-> new EntityNotFoundException("Theory topic with Id " +theoryTopicId+" not found!."));
         return theoryTopic;
     }
 }
