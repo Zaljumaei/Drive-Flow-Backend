@@ -1,13 +1,17 @@
 package com.zaljumaei.driveflow.lesson.service;
 
-import com.zaljumaei.driveflow.lesson.domain.TheoryTopic;
 import com.zaljumaei.driveflow.lesson.dto.TheoryTopicRequest;
+import com.zaljumaei.driveflow.lesson.dto.TheoryTopicResponse;
+
+import java.util.List;
 
 public interface TheoryTopicService {
 
-    TheoryTopic addTopic(TheoryTopicRequest request);
+    TheoryTopicResponse addTopic(TheoryTopicRequest request);
 
     void deleteTopic(String theoryTopicId);
 
-    TheoryTopic updateTopic(TheoryTopicRequest request, String theoryTopicId);
+    TheoryTopicResponse updateTopic(TheoryTopicRequest request, String theoryTopicId);
+
+    List<TheoryTopicResponse> getAll();
 }

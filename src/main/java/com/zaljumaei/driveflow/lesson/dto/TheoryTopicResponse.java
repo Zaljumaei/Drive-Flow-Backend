@@ -1,7 +1,11 @@
 package com.zaljumaei.driveflow.lesson.dto;
 
-public record TheoryTopicRequest (
+import lombok.Builder;
+
+@Builder
+public record TheoryTopicResponse (
+        String id,
         String title,
         String description,
         int topicNumber
-){ }
+) { }
