@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 
 /**
  * Class to manage student and the status for TheoryLesson.
+ * For TheoryLesson we need Information like who attend it, which Topic,
+ * so the class {@link TheoryLesson} is not enough.
  */
 @Entity
 public class TheoryLessonAttendance extends TenantScopedEntity {

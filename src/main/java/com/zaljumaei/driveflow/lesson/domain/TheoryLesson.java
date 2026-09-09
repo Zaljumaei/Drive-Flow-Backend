@@ -7,7 +7,9 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
-
+/**
+ * Class to represent the TheoryLesson which can take place many times for the same topic.
+ */
 @Entity
 @Getter
 @Setter

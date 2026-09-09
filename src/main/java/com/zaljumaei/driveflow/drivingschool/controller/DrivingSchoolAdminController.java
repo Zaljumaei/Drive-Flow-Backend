@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Controller that can bes used from the systemAdmin to (e.g) create and delete DrivingSchool (Tenant).
+ * Controller that can be used from the systemAdmin to (e.g) create and delete DrivingSchool (Tenant).
  * DrivingSchool admins should use the {@link DrivingSchoolController}.
  */
 
