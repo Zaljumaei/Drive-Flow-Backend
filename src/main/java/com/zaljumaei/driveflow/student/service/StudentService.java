@@ -18,6 +18,8 @@ public interface StudentService {
 
     PageResponse<StudentResponse> findAll(int page);
 
+    PageResponse<StudentResponse> findAllByLastOrFirstName(String name, int page);
+
     StudentResponse update(String id, UpdateStudentRequest request);
 
     void delete(String id);
