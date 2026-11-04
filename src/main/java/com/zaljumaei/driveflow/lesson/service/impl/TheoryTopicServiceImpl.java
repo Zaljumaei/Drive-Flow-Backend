@@ -50,6 +50,14 @@ public class TheoryTopicServiceImpl implements TheoryTopicService {
                 .build();
     }
 
+    @Override
+    public TheoryTopic findById(String id){
+        TheoryTopic topic = theoryTopicRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No theory topic with this id"));
+
+        return topic;
+    }
+
     /**
      * Delete a theory topic if it existed.
      *

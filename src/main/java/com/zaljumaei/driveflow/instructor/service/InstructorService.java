@@ -13,6 +13,8 @@ public interface InstructorService {
 
     InstructorResponse findById(String id);
 
+    Instructor findEntityById(String id);
+
     PageResponse<InstructorResponse> findAll(int page);
 
     void delete(String id);

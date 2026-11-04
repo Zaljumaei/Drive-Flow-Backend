@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -65,7 +66,9 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
 
 
     /**
-     * Find specific number of pages of StudentEnrollments to perform the performance,
+     * Find all StudentEnrollments of the DrivingSchool,
+     * this give more information than just students' data.
+     * Find specific number of pages of StudentEnrollments to enhance the performance,
      * the number can be set in the properties, default one is set on {@link PagingProps}
      *
      * @param page number of page, it starts by zero.
@@ -129,6 +132,35 @@ public class StudentEnrollmentServiceImpl implements StudentEnrollmentService {
         StudentLicenseEnrollment studentLicenseEnrollment = checkIfStudentLicenseEnrollmentExists(enrollmentId);
         return studentEnrollmentMapper.toResponse(studentLicenseEnrollment);
     }
+
+    /**
+     * Find the entity of {@link StudentLicenseEnrollment} by id.
+     *
+     * @param enrollmentId the id.
+     * @return the entity of {@link StudentLicenseEnrollment}.
+     */
+    @Override
+    public StudentLicenseEnrollment findEntityById(String enrollmentId) {
+        return checkIfStudentLicenseEnrollmentExists(enrollmentId);
+    }
+
+
+    /**
+     * Find all enrollment of student in driving by his id,
+     * in case when the student is registered for multiple driving classes
+     *
+     * @param id the of the student
+     * @return all enrollments of the students.
+     */
+    @Override
+    public Set<StudentEnrollmentResponse> findEnrollmentByStudentId(String id) {
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No student found with this Id!."));
+        Set<StudentLicenseEnrollment> enrollment = student.getStudentLicenseClasses();
+
+        return enrollment.stream().map(studentEnrollmentMapper::toResponse).collect(Collectors.toSet());
+    }
+
 
     /**
      * Delete a existed student-enrollment

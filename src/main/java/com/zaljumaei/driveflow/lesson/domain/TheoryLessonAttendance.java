@@ -1,8 +1,11 @@
 package com.zaljumaei.driveflow.lesson.domain;
 
 import com.zaljumaei.driveflow.student.enrollment.StudentLicenseEnrollment;
-import jakarta.persistence.*;
 import com.zaljumaei.driveflow.common.TenantScopedEntity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +15,8 @@ import java.time.LocalDateTime;
  * so the class {@link TheoryLesson} is not enough.
  */
 @Entity
+@Getter
+@Setter
 public class TheoryLessonAttendance extends TenantScopedEntity {
 
     @ManyToOne

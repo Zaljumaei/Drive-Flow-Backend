@@ -33,4 +33,8 @@ public class PersonDetails {
     public PersonDetails() {
 
     }
+
+    public String getFullname() {
+        return this.lastName + ", " + this.firstName;
+    }
 }
