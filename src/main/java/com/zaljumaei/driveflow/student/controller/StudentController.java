@@ -44,6 +44,12 @@ public class StudentController {
         return ResponseEntity.ok().body(studentService.findById(id));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<PageResponse<StudentResponse>> getAllStudentByLastOrFirstName(
+            @RequestParam String name, @RequestParam int page) {
+        return ResponseEntity.ok().body(studentService.findAllByLastOrFirstName(name, page));
+    }
+
     /**
      * Handle the HTTP request to get page of students of the drivingSchool.
      * Retrieves a specific page of students, which is applied in the service layer.

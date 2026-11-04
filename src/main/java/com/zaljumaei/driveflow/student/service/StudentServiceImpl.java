@@ -9,6 +9,7 @@ import com.zaljumaei.driveflow.student.dtos.StudentResponse;
 import com.zaljumaei.driveflow.student.dtos.UpdateStudentRequest;
 import com.zaljumaei.driveflow.student.repository.StudentRepository;
 
+import com.zaljumaei.driveflow.tenantmanagement.TenantContext;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +60,30 @@ public class StudentServiceImpl implements  StudentService {
 
         return studentMapper.toResponse(student);
     }
+
+    /**
+     * Find all students with the same or alike the name.
+     * Here we need the tenantId, since hibernate will not manage that for us.
+     *
+     * @param name The name to search after.
+     * @param page The number of page.
+     * @return all Students with this name or like it.
+     */
+    @Override
+    public PageResponse<StudentResponse> findAllByLastOrFirstName(String name, int page) {
+        PageRequest pageRequest = PageRequest.of(page, pagingProps.getStudentPageSize());
+        String tenantId = TenantContext.getCurrentTenant();
+
+        Page<Student> studentPage = studentRepository.searchStudents(tenantId, name, pageRequest);
+        return PageResponse.<StudentResponse>builder()
+                .content(studentPage.getContent().stream().map(studentMapper::toResponse).collect(Collectors.toList()))
+                .totalPages(studentPage.getTotalPages())
+                .totalElement(studentPage.getNumberOfElements())
+                .isFirst(studentPage.isFirst())
+                .isLast(studentPage.isLast())
+                .build();
+    }
+
 
     /**
      * Find specific page of students of driving school, the number of students is specified in {@link PagingProps}.
