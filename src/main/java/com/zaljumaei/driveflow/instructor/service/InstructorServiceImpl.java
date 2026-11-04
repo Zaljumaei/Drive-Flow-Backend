@@ -68,13 +68,23 @@ public class InstructorServiceImpl implements InstructorService {
     /**
      * Find an instructor with the provided id.
      * @param id The id of instructor.
-     * @return Dto response.
+     * @return Dto response of the instructor.
      */
     @Override
     public InstructorResponse findById(String id) {
         Instructor instructor = checkIfExistById(id);
         InstructorResponse response = instructorMapper.toInstructorResponse(instructor);
         return response;
+    }
+
+    /**
+     * Find an instructor entity by its id.
+     * @param id the id of the instructor.
+     * @return the instructor entity.
+     */
+    @Override
+    public Instructor findEntityById(String id) {
+        return checkIfExistById(id);
     }
 
     /**

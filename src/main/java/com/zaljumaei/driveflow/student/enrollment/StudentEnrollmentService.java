@@ -6,10 +6,14 @@ import com.zaljumaei.driveflow.student.enrollment.dto.StudentEnrollmentRequest;
 import com.zaljumaei.driveflow.student.enrollment.dto.StudentEnrollmentResponse;
 import com.zaljumaei.driveflow.student.enrollment.dto.UpdateStudentEnrollmentRequest;
 
+import java.util.Set;
+
 
 public interface StudentEnrollmentService {
 
     StudentEnrollmentResponse enrollStudent(StudentEnrollmentRequest enrollmentRequest);
+
+    Set<StudentEnrollmentResponse> findEnrollmentByStudentId(String id);
 
     PageResponse<StudentEnrollmentResponse> findAll(int page);
 
@@ -24,4 +28,6 @@ public interface StudentEnrollmentService {
     void deleteEnrollment(String enrollmentId);
 
     StudentEnrollmentResponse findById(String enrollmentId);
+
+    StudentLicenseEnrollment findEntityById(String enrollmentId);
 }

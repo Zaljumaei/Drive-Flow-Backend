@@ -1,5 +1,6 @@
 package com.zaljumaei.driveflow.lesson.service;
 
+import com.zaljumaei.driveflow.lesson.domain.TheoryTopic;
 import com.zaljumaei.driveflow.lesson.dto.TheoryTopicRequest;
 import com.zaljumaei.driveflow.lesson.dto.TheoryTopicResponse;
 
@@ -8,6 +9,8 @@ import java.util.List;
 public interface TheoryTopicService {
 
     TheoryTopicResponse addTopic(TheoryTopicRequest request);
+
+    TheoryTopic findById(String id);
 
     void deleteTopic(String theoryTopicId);
 
