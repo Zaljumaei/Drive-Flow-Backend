@@ -1,11 +1,10 @@
 package com.zaljumaei.driveflow.lesson.service;
 
+import com.zaljumaei.driveflow.common.PageResponse;
 import com.zaljumaei.driveflow.lesson.domain.TheoryLesson;
 import com.zaljumaei.driveflow.lesson.dto.TheoryLesson.TheoryLessonRequest;
 import com.zaljumaei.driveflow.lesson.dto.TheoryLesson.TheoryLessonResponse;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 /**
  * Service for TheoryLesson.
@@ -17,7 +16,7 @@ public interface TheoryLessonService {
 
     TheoryLessonResponse findById(String id);
 
-    Page<TheoryLessonResponse> findAll(Pageable pageable);
+    PageResponse<TheoryLessonResponse> findAll(int pageNumber);
 
     TheoryLessonResponse update(
             String id,

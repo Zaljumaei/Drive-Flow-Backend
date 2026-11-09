@@ -1,5 +1,6 @@
 package com.zaljumaei.driveflow.lesson.service.impl;
 
+import com.zaljumaei.driveflow.common.PageResponse;
 import com.zaljumaei.driveflow.lesson.domain.TheoryLesson;
 import com.zaljumaei.driveflow.lesson.domain.TheoryTopic;
 import com.zaljumaei.driveflow.lesson.dto.TheoryLesson.TheoryLessonMapper;
@@ -11,11 +12,13 @@ import com.zaljumaei.driveflow.lesson.service.TheoryLessonService;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Implementation class for the interface {@link TheoryLessonService}.
@@ -86,15 +89,22 @@ public class TheoryLessonServiceImpl implements TheoryLessonService {
     /**
      * Find all theory lessons with pagination.
      *
-     * @param pageable Pagination information.
+     * @param pageNumber Page number.
      * @return A page of theory lesson responses.
      */
     @Override
-    public Page<TheoryLessonResponse> findAll(Pageable pageable) {
+    public PageResponse<TheoryLessonResponse> findAll(int pageNumber) {
 
+        Pageable pageable = PageRequest.of(pageNumber, 14);
         Page<TheoryLesson> lessons = theoryLessonRepository.findAll(pageable);
 
-        return lessons.map(theoryLessonMapper::toTheoryLessonResponse);
+        return PageResponse.<TheoryLessonResponse>builder()
+                .content(lessons.stream().map(theoryLessonMapper::toTheoryLessonResponse).collect(Collectors.toList()))
+                .totalPages(lessons.getTotalPages())
+                .totalElement(lessons.getNumberOfElements())
+                .isFirst(lessons.isFirst())
+                .isLast(lessons.isLast())
+                .build();
     }
 
     /**
