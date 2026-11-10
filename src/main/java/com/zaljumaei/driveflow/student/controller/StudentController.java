@@ -44,7 +44,14 @@ public class StudentController {
         return ResponseEntity.ok().body(studentService.findById(id));
     }
 
-    @GetMapping("/all")
+    /**
+     * Search students by first name or last name.
+     *
+     * @param name The student's first or last name.
+     * @param page The page number.
+     * @return A page of matching students.
+     */
+    @GetMapping("/search-by-name")
     public ResponseEntity<PageResponse<StudentResponse>> getAllStudentByLastOrFirstName(
             @RequestParam String name, @RequestParam int page) {
         return ResponseEntity.ok().body(studentService.findAllByLastOrFirstName(name, page));
