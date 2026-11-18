@@ -12,6 +12,12 @@ public class TheoryLessonMapper {
     private TheoryTopicService theoryTopicService;
     private InstructorService instructorService;
 
+    public TheoryLessonMapper(TheoryTopicService theoryTopicService,
+                              InstructorService instructorService) {
+        this.theoryTopicService = theoryTopicService;
+        this.instructorService = instructorService;
+    }
+
     /**
      * Map a request to entity, this can be used to create new entity.
      *
