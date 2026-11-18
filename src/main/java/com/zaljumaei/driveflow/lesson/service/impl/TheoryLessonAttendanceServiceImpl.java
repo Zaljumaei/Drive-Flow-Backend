@@ -44,8 +44,6 @@ public class TheoryLessonAttendanceServiceImpl implements TheoryLessonAttendance
 
         checkForDuplicateAttendance(attendance, null);
 
-        attendance.setConfirmedAt(LocalDateTime.now());
-
         TheoryLessonAttendance savedAttendance =
                 attendanceRepository.save(attendance);
 

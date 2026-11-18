@@ -1,8 +1,8 @@
 package com.zaljumaei.driveflow.lesson.dto.TheoryLessonAttendance;
 
-import com.zaljumaei.driveflow.lesson.service.TheoryLessonService;
 import org.springframework.stereotype.Component;
 
+import com.zaljumaei.driveflow.lesson.service.TheoryLessonService;
 import com.zaljumaei.driveflow.lesson.domain.TheoryLesson;
 import com.zaljumaei.driveflow.lesson.domain.TheoryLessonAttendance;
 import com.zaljumaei.driveflow.student.domain.Student;
@@ -15,12 +15,22 @@ public class TheoryLessonAttendanceMapper {
     private StudentEnrollmentService studentEnrollmentService;
     private TheoryLessonService theoryLessonService;
 
+    public TheoryLessonAttendanceMapper(StudentEnrollmentService studentEnrollmentService,
+                                        TheoryLessonService theoryLessonService){
+        this.studentEnrollmentService = studentEnrollmentService;
+        this.theoryLessonService = theoryLessonService;
+    }
+
     public TheoryLessonAttendance toEntity(TheoryLessonAttendanceRequest request) {
         TheoryLessonAttendance attendance = new TheoryLessonAttendance();
 
         StudentLicenseEnrollment enrollment = studentEnrollmentService.findEntityById(request.studentEnrollmentId());
-
         attendance.setStudentLicenseEnrollment(enrollment);
+
+        TheoryLesson lesson = theoryLessonService.findEntityById(
+                request.theoryLessonId());
+        attendance.setTheoryLesson(lesson);
+
         attendance.setStatus(request.status());
         attendance.setNotes(request.notes());
         attendance.setConfirmedAt(request.conformedAt());
@@ -65,8 +75,7 @@ public class TheoryLessonAttendanceMapper {
             TheoryLessonAttendance attendance
     ) {
         TheoryLesson lesson = theoryLessonService.findEntityById(
-                request.theoryLessonId()
-        );
+                request.theoryLessonId());
 
         StudentLicenseEnrollment enrollment =
                 studentEnrollmentService.findEntityById(
